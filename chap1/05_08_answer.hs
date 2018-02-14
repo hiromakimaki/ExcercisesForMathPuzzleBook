@@ -1,13 +1,17 @@
-{- *** From Q.05 to Q.06 answer ***
+{- *** From Q.05 to Q.08 answer ***
 
-Prelude> :l 05_06_answer.hs
-[1 of 1] Compiling Main             ( 05_06_answer.hs, interpreted )
+Prelude> :l 05_08_answer.hs
+[1 of 1] Compiling Main             ( 05_08_answer.hs, interpreted )
 Ok, one module loaded.
 *Main> main
 "*** Q.05 ***"
 3518437540
 "*** Q.06 ***"
 26882
+"*** Q.07 ***"
+17368162415924
+"*** Q.08 ***"
+19
 
 -}
 
@@ -50,10 +54,33 @@ calcCasesForFixedSquareNumAndLongLength squareNum longLen
     | (squareNum <= 0) || (longLen <= 0) = 0
     | otherwise = length (filter (\x -> x == squareNum) (map (calcSquareNum longLen) [1..longLen]))
 
+
+-- Q.07 --
+permutation :: Int -> Int -> Int
+permutation n k
+    | (n <= 0) || (k <= 0) = 1
+    | otherwise = (n - k + 1) * (permutation n (k - 1))
+
+calcSumOfMovement :: Int -> Int
+calcSumOfMovement n =
+    sum (map (\fixN -> (n - fixN) * fixN * (permutation n (n - fixN - 1))) [1..n])
+
+
+-- Q.08 --
+calcOneStrokePatternNum :: Int -> Int -> Int
+calcOneStrokePatternNum w l = w + l - 1
+
+
 main = do
     print $ "*** Q.05 ***"
     print $ calcMoneySumForPascalsTriangeNums 45
     
     print $ "*** Q.06 ***"
     print $ sum (map (calcCasesForFixedSquareNumAndLongLength 20) [1..1000])
+    
+    print $ "*** Q.07 ***"
+    print $ calcSumOfMovement 15
+    
+    print $ "*** Q.08 ***"
+    print $ calcOneStrokePatternNum 10 10
 
